@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TEAM CARD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>TEAM CARD</h1>
+<a href="/dashboard">Back to dashboard</a></br>
+<a th:href="@{/dashboard/{eventId}(eventId=${team.event.id})}">Back to event</a></br>
+<a href="/logout">Logout</a></br></br></br></br></br></br>
+
+<div th:object="${team}">
+    <p th:text="'Team title: ' + *{title}"></p>
+    <p th:text="'Short team description: ' + *{shortDescription}"></p>
+    <p th:text="'Full team description: ' + *{description}"></p>
+    <p th:text="'Team leader: ' + *{leader}"></p>
+
+    <p>Members list:</p>
+    <ul th:each="member : *{members}">
+        <li><a th:href="@{/user/profile/{username}(username=${member})}" th:text="${member}"></a></li>
+    </ul>
+
+    <form method="post" th:action="@{/dashboard/{eventId}/{teamId}/joinTeam(eventId=${eventId}, teamId=${team.id})}" th:if="${isLeader == false && isMember == false}">
+        <input type="hidden" name="username" th:value="${user.username}">
+        <button type="submit">Join team</button>
+    </form>
+    <form method="post" th:action="@{/dashboard/{eventId}/{teamId}/leaveTeam(eventId=${eventId}, teamId=${team.id})}" th:if="${isLeader == false && isMember == true}">
+        <input type="hidden" name="username" th:value="${user.username}">
+        <button type="submit">Leave team</button>
+    </form>
+</div>
+
+
+
+
+</body>
+</html>

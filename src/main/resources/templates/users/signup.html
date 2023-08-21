@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SIGNUP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>SIGNUP</h1>
+
+<div th:if="${param.error} != null">
+    <p>Incorrect input</p>
+</div>
+
+<form action="/proceed-signup" method="post">
+    <label>* Username</label> <input type="text" name="username" value=""></br>
+    <label>* Password</label> <input type="text" name="password" value=""></br>
+    </hr>
+    <label>* First name</label> <input type="text" name="firstName" value=""></br>
+    <label>* Last name</label> <input type="text" name="lastName" value=""></br>
+    <label>Skills (separated by commas)</label> <input type="text" name="skills" value=""></br>
+    <button type="submit">Submit</button>
+
+    </br></br>
+    <label>Marked by * is required</label>
+</form>
+</body>
+</html>

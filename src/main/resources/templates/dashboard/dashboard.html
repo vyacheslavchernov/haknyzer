@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DASHBOARD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>DASHBOARD</h1>
+<span th:text="'Hello, ' + ${user.username}"></span></br></br></br>
+<a th:href="@{/user/profile/{username}(username=${user.username})}">User space</a></br>
+<a th:if="${isAdmin == true}" href="/admin">Admin panel</a></br>
+<a href="/logout">Logout</a></br></br></br></br></br></br>
+
+
+<ul th:each="event : ${events}">
+    <li><a th:href="@{/dashboard/{eventId}(eventId=${event.id})}" th:text="${event.title}"></a></li>
+</ul>
+
+
+</body>
+</html>

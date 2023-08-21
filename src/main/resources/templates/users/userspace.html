@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>INDEX</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>USER SPACE</h1>
+<a href="/dashboard">Back to dashboard</a></br>
+<a href="/logout">Logout</a></br></br></br></br>
+
+<span th:if="${param.success} != null">User information updated!</span></br></br></br></br>
+
+<div th:if="${selfPage == false}">
+    <label th:text="${'First name ' + userData.firstName}"></label></br>
+    <label th:text="${'Last name ' + userData.lastName}"></label></br>
+    <label th:text="${'Skills ' + userData.skills}"></label></br>
+</div>
+
+<div th:if="${selfPage == true}">
+    <form action="/user/edit/data" method="post" th:object="${userData}">
+        <label>EDIT USER DATA</label></br></br>
+
+        <label>First name</label><input name="firstName" th:value="*{firstName}"></br>
+        <label>Last name</label><input name="lastName" th:value="*{lastName}"></br>
+        <label>Skills</label><input name="skills" th:value="*{skills}"></br></br>
+
+        <button type="submit">Update info</button>
+
+        <input type="hidden" name="username" th:value="${user.username}">
+    </form>
+
+    </br></br></br></br>
+
+    <form action="/user/edit/psw" method="post">
+        <label>EDIT USER CREDENTIALS</label></br></br>
+
+        <label>Old password</label><input name="oldPsw"></br>
+        <label>New password</label><input name="newPsw"></br>
+        <label>New password again</label><input name="newPsw2"></br></br>
+
+        <button type="submit">Update password</button>
+
+        <input type="hidden" name="username" th:value="${user.username}">
+    </form>
+</div>
+</body>
+</html>
+
+

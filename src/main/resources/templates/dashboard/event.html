@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>EVENT CARD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>EVENT CARD</h1>
+<a href="/dashboard">Back to dashboard</a></br>
+<a href="/logout">Logout</a></br></br></br></br></br></br>
+
+<div th:object="${event}">
+    <p th:text="'Title: ' + *{title}"></p>
+    <p th:text="'Description: ' + *{description}"></p>
+    <p th:text="'Organizer: ' + *{organizer}"></p>
+    <p th:text="'Is finished: ' + *{finished}"></p>
+    <p th:text="'Is registration closed: ' + *{registrationClosed}"></p></br>
+    <p>Teams list:</p>
+    <ul th:each="team : *{teams}">
+        <li><a th:href="@{/dashboard/{eventId}/{teamId}(eventId=*{id},teamId=${team.id})}" th:text="${team.title}"></a></li>
+    </ul>
+</div>
+
+</br>
+</br>
+</br>
+
+<form th:if="${event.registrationClosed == false}" th:action="@{/dashboard/{eventId}/createTeam(eventId=${event.id})}" method="post">
+    <label>CREATE NEW TEAM</label></br></br>
+
+    <label>Team title</label><input name="title"></br>
+    <label>Short description</label><textarea name="shortDescription"></textarea></br>
+    <label>Full description</label><textarea name="fullDescription"></textarea></br>
+
+    <button type="submit">Create</button>
+
+    <input type="hidden" name="username" th:value="${user.username}">
+</form>
+
+<form method="post" th:action="@{/dashboard/{eventId}/closeRegistration(eventId=${event.id})}" th:if="${event.registrationClosed == false && event.organizer == user.username}">
+    <input type="hidden" name="username" th:value="${user.username}">
+    <button type="submit">Close registration</button>
+</form>
+
+<form method="post" th:action="@{/dashboard/{eventId}/finishEvent(eventId=${event.id})}" th:if="${event.finished == false && event.organizer == user.username}">
+    <input type="hidden" name="username" th:value="${user.username}">
+    <button type="submit">Finish event</button>
+</form>
+
+</body>
+</html>
